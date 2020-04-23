@@ -38,7 +38,7 @@ public class displayDepartmentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		response.setContentType("text/html; charset=UTF-8");
 		// TODO 必須機能「趣味参照機能」
 		// JDBCドライバの準備
 		try {
@@ -55,7 +55,7 @@ public class displayDepartmentServlet extends HttpServlet {
 		String dbPass = "webapp";
 
 		// 実行するSQL文
-		String sql = "select \n" + "* \n" + "from \n" + "DEPARTMENT \n";
+		String sql = "select" + " ID,NAME  " + " from " + " DEPARTMENT";
 
 		// 商品リスト（Item型のリスト）
 		List<Department> DepartmentList = new ArrayList<>();
