@@ -43,7 +43,9 @@ public class deleteDepartmentServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		// リクエストパラメータの取得
-				String department_id = request.getParameter("department_id");
+
+				String department_id = request.getParameter("q");
+				System.out.println(department_id);
 
 				// JDBCドライバの準備
 				try {
@@ -64,7 +66,8 @@ public class deleteDepartmentServlet extends HttpServlet {
 						"from \n" +
 						"DEPARTMENT \n" +
 						"where \n" +
-						"DEPARTMENT.ID=000'"+department_id+"'; \n" ;
+						"DEPARTMENT.ID=000'"+department_id+"';\n"+
+						"commit;";
 
 
 				// 受注リスト（Order型のリスト）
