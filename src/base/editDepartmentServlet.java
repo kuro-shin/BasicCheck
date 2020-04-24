@@ -12,26 +12,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class deleteDepartmentServlet
+ * Servlet implementation class editDepartmentServlet
  */
-@WebServlet("/deleteDepartmentServlet")
-public class deleteDepartmentServlet extends HttpServlet {
+@WebServlet("/editDepartmentServlet")
+public class editDepartmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public deleteDepartmentServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public editDepartmentServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
@@ -64,7 +62,7 @@ public class deleteDepartmentServlet extends HttpServlet {
 						"from \n" +
 						"DEPARTMENT \n" +
 						"where \n" +
-						"DEPARTMENT.ID=000'"+department_id+"'; \n" ;
+						"DEPARTMENT.ID='"+department_id+"'; \n" ;
 
 
 				// 受注リスト（Order型のリスト）
