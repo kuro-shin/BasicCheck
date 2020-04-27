@@ -101,7 +101,7 @@ $(document).ready(function() {
 	//$('#DepartmentTable').ready('load', executeAjax);
 	// 更新ボタンにイベント設定
 //	for(var i=1;i<=department_count;i++){
-//	$('#delete'+i).click(deleteDepartment($('#id'+i).text()));
+//	$('#delete'+i).click(deleteDepartment($('#id'+i).text()));//click内に()がつくメソッド作るとじっこうされてしまう
 	//$('#delete'+i).click(console.log("a"));
 //}
 	$('#createDepartment').click(createDepartment);
