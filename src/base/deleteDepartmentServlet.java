@@ -45,7 +45,7 @@ public class deleteDepartmentServlet extends HttpServlet {
 		// リクエストパラメータの取得
 
 				String department_id = request.getParameter("q");
-				System.out.println(department_id);
+				System.out.println("aiueo");
 
 				// JDBCドライバの準備
 				try {
@@ -62,15 +62,14 @@ public class deleteDepartmentServlet extends HttpServlet {
 				String dbPass = "webapp";
 
 				// 実行するSQL文
-				String sql = "delete  \n" +
-						"from \n" +
-						"DEPARTMENT \n" +
-						"where \n" +
-						"DEPARTMENT.ID='"+department_id+"'\n";
+				String sql = "delete " +
+						"from " +
+						"DEPARTMENT " +
+						"where " +
+						"ID='"+department_id+"'";
 
 
-
-				// 受注リスト（Order型のリスト）
+				System.out.println("aaaaa");
 
 				// DBに接続してSQLを実行
 				try (
@@ -79,7 +78,9 @@ public class deleteDepartmentServlet extends HttpServlet {
 
 						// SQLの命令文を実行するための準備をおこないます
 						Statement stmt = con.createStatement();	) {
+					System.out.println("bbbbb");
 					int resultCount = stmt.executeUpdate(sql);//1つのSQL文しか実行できない
+
 
 					System.out.println(resultCount+"件削除");
 
