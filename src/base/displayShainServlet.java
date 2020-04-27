@@ -54,7 +54,7 @@ public class displayShainServlet extends HttpServlet {
 		String dbPass = "webapp";
 
 		// 実行するSQL文
-		String sql = "select" + " ID,NAME  " + " from " + " SHAIN";
+		String sql = "select" + " ID,NAME,AGE,SEX,ADDRESS,DEPARTMENT_ID  " + " from " + " SHAIN";
 
 		// 商品リスト（Item型のリスト）
 		List<Shain> ShainList = new ArrayList<>();
@@ -77,6 +77,10 @@ public class displayShainServlet extends HttpServlet {
 				Shain s = new Shain();
 				s.setShain_id(rs1.getString("ID"));// Item型の変数itemに販売単価をセット
 				s.setShain_name(rs1.getString("NAME"));// Item型の変数itemに税区分をセット
+				s.setAge(rs1.getString("AGE"));
+				s.setSex(rs1.getString("SEX"));
+				s.setHome(rs1.getString("ADDRESS"));
+				s.setShainDepartmentName(rs1.getString("DEPARTMENT_ID"));
 				// 作成した一つ分のItem型をリストに追加
 				ShainList.add(s);
 			}
