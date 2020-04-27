@@ -41,7 +41,9 @@ public class editDepartmentServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		// リクエストパラメータの取得
-				String department_id = request.getParameter("department_id");
+				String renew_department_id = request.getParameter("renew_department_id");
+				String renew_department_name = request.getParameter("renew_department_name");
+
 
 				// JDBCドライバの準備
 				try {
@@ -58,11 +60,11 @@ public class editDepartmentServlet extends HttpServlet {
 				String dbPass = "webapp";
 
 				// 実行するSQL文
-				String sql = "delete  \n" +
-						"from \n" +
-						"DEPARTMENT \n" +
-						"where \n" +
-						"DEPARTMENT.ID='"+department_id+"'; \n" ;
+				String sql = "UPDATE DEPARTMENT \n" +
+							"set NAME='"+renew_department_name+"'\n" +
+								"where \n" +
+								"ID='"+renew_department_id+"' \n";
+
 
 
 				// 受注リスト（Order型のリスト）
@@ -76,7 +78,7 @@ public class editDepartmentServlet extends HttpServlet {
 						Statement stmt = con.createStatement();	) {
 					int resultCount = stmt.executeUpdate(sql);
 
-					System.out.println(resultCount+"件削除");
+					System.out.println(resultCount+"件編集");
 
 				} catch (Exception e) {
 					throw new RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]", e.getMessage()), e);

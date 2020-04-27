@@ -66,7 +66,7 @@ public class deleteDepartmentServlet extends HttpServlet {
 						"from \n" +
 						"DEPARTMENT \n" +
 						"where \n" +
-						"DEPARTMENT.ID=000'"+department_id+"'\n";
+						"DEPARTMENT.ID='"+department_id+"'\n";
 
 
 

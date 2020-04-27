@@ -18,10 +18,12 @@ function executeAjax() {
 			for (var i = 0; i < json.length; i++) {
 				var d = json[i];
 				$('#DepartmentTable').append('<tr class="department_list"><td id="id'+(i+1)+'">' + d.department_id + '</td><td>' + d.department_name + '</td><td>'
-				+'<button value="'+(i+1)+'" id="edit'+(i+1)+'">編集</button>'+ '</td><td>'
+				+'<a id="edit'+(i+1)+'"href="http://localhost:8080/BasicCheck/EditDepartment.html?q='+d.department_id+'">編集</a>'+ '</td><td>'
 				+'<button value="'+(i+1)+'" id="delete'+(i+1)+'">削除</button>'+'</td></tr>');
 			//	department_count++;
 			}
+
+
 
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -36,11 +38,10 @@ function executeAjax() {
 	});
 }
 
-function deleteDepartment(){
+function deleteDepartment(id){
 	 $(".department_list").remove();// 今までのdepartmentlist消す
-	var department_id = $(this).attr("id").substr(6);
 	var requestQuery = {
-	q : department_id
+	q : id
 };
 	$.ajax({
 		type : 'POST',
@@ -103,7 +104,7 @@ $(document).ready(function() {
 	$('#DepartmentTable').ready('load', executeAjax);
 	// 更新ボタンにイベント設定
 	for(var i=1;i<=department_count;i++){
-	$('#delete'+i).click(deleteDepartment);
+	$('#delete'+i).click(deleteDepartment($('#id'+i).text()));
 	}
 
 	$('#createDepartment').click(createDepartment);
