@@ -59,8 +59,8 @@ public class createDepartmentServlet extends HttpServlet {
 		// 実行するSQL文
 		String sql = "insert into DEPARTMENT " +
 					"(ID,NAME) " +
-					"values ('"+new_department_id+"','"+new_department_name+"'); "+
-					"commit;";//TO DO...IDの設定
+					"values ('"+new_department_id+"','"+new_department_name+"') ";
+					//TO DO...IDの設定
 		System.out.println(sql);
 		//response.getWriter().append(sql);
 		// DBに接続してSQLを実行

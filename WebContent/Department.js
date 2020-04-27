@@ -17,7 +17,7 @@ function executeAjax() {
 			console.log(json);
 			for (var i = 0; i < json.length; i++) {
 				var d = json[i];
-				$('#DepartmentTable').append('<tr class="department_list"><td>' + d.department_id + '</td><td>' + d.department_name + '</td><td>'
+				$('#DepartmentTable').append('<tr class="department_list"><td id="id'+(i+1)+'">' + d.department_id + '</td><td>' + d.department_name + '</td><td>'
 				+'<button value="'+(i+1)+'" id="edit'+(i+1)+'">編集</button>'+ '</td><td>'
 				+'<button value="'+(i+1)+'" id="delete'+(i+1)+'">削除</button>'+'</td></tr>');
 			//	department_count++;

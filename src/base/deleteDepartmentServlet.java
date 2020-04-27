@@ -66,8 +66,8 @@ public class deleteDepartmentServlet extends HttpServlet {
 						"from \n" +
 						"DEPARTMENT \n" +
 						"where \n" +
-						"DEPARTMENT.ID=000'"+department_id+"';\n"+
-						"commit;";
+						"DEPARTMENT.ID=000'"+department_id+"'\n";
+
 
 
 				// 受注リスト（Order型のリスト）
@@ -79,7 +79,7 @@ public class deleteDepartmentServlet extends HttpServlet {
 
 						// SQLの命令文を実行するための準備をおこないます
 						Statement stmt = con.createStatement();	) {
-					int resultCount = stmt.executeUpdate(sql);
+					int resultCount = stmt.executeUpdate(sql);//1つのSQL文しか実行できない
 
 					System.out.println(resultCount+"件削除");
 
