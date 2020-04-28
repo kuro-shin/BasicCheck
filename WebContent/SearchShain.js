@@ -1,4 +1,3 @@
-var shain_count = 0;
 
 function searchShain() {
 	'use strict';
@@ -17,13 +16,13 @@ function searchShain() {
 		success : function(json) {
 			// サーバーとの通信に成功した時の処理
 			// 確認のために返却値を出力
-			shain_count = json.length;
 			$("#shainTable").empty();
 			if (json.length == 0) {
 				$('#shainTable').append('<p>登録された社員はいません</p>');
 			}
 			for (var i = 0; i < json.length; i++) {
 				var s = json[i];
+				console.log(s);
 				$('#shainTable').append('<div class="shain_list"><p> 社員ID:' + s.shain_id + '  社員名：' + s.shain_name + '</p></div>');
 			}
 
@@ -41,7 +40,5 @@ function searchShain() {
 }
 
 $(document).ready(function() {
-	// 初期表示用
 	$('#searchShainButton').click(searchShain);
-
 });

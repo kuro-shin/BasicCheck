@@ -45,8 +45,6 @@ public class searchShainServlet extends HttpServlet {
 		String shainDepartmentName = request.getParameter("shainDepartmentName");
 		String shainId = request.getParameter("shainId");
 		String shainName = request.getParameter("shainName");
-
-
 		try {
 			// JDBCドライバのロード
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -61,10 +59,14 @@ public class searchShainServlet extends HttpServlet {
 		String dbPass = "webapp";
 
 		// 実行するSQL文
-		String sql = "select \n" + "* \n" + "from \n" + "SHAIN \n" +
+		String sql = "select * from SHAIN where 1=1 ";
 
-				"where \n" + "ID='"+shainId+"' \n"
-				+ "or NAME like '%"+shainName+"%' \n" + "or DEPARTMENT_ID='"+shainDepartmentName+"' \n";
+			if(shainId!=""){
+			sql+="and ID='"+shainId+"' ";}
+			if(shainName!=""){
+			sql+="and NAME like '%"+shainName+"%' ";}
+			if(shainDepartmentName!=null){
+			sql+="and DEPARTMENT_ID='"+shainDepartmentName+"' ";}
 
 		// 商品リスト（Item型のリスト）
 		List<Shain> ShainList = new ArrayList<>();
@@ -83,15 +85,13 @@ public class searchShainServlet extends HttpServlet {
 			// SQL実行後の処理内容
 			// 取得結果分だけループを回してitemListに追加していく。
 			while (rs1.next()) {
-				// 商品ごとに新しいItemインスタンスを作
 				Shain s = new Shain();
-				s.setShain_id(rs1.getString("ID"));// Item型の変数itemに販売単価をセット
-				s.setShain_name(rs1.getString("NAME"));// Item型の変数itemに税区分をセット
+				s.setShain_id(rs1.getString("ID"));
+				s.setShain_name(rs1.getString("NAME"));
 				s.setAge(rs1.getString("AGE"));
 				s.setSex(rs1.getString("SEX"));
 				s.setHome(rs1.getString("ADDRESS"));
 				s.setShainDepartmentName(rs1.getString("DEPARTMENT_ID"));
-				// 作成した一つ分のItem型をリストに追加
 				ShainList.add(s);
 			}
 		} catch (Exception e) {
