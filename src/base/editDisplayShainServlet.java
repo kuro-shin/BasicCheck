@@ -18,16 +18,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Servlet implementation class displayShainServlet
+ * Servlet implementation class editDisplayShainServlet
  */
-@WebServlet("/displayShainServlet")
-public class displayShainServlet extends HttpServlet {
+@WebServlet("/editDisplayShainServlet")
+public class editDisplayShainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public displayShainServlet() {
+    public editDisplayShainServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,9 +38,9 @@ public class displayShainServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html; charset=UTF-8");
+		String shain_id = request.getParameter("shain_id");
 		// TODO 必須機能「趣味参照機能」
 		// JDBCドライバの準備
-
 		try {
 			// JDBCドライバのロード
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -55,7 +55,13 @@ public class displayShainServlet extends HttpServlet {
 		String dbPass = "webapp";
 
 		// 実行するSQL文
-		String sql = "select" + " ID,NAME,AGE,SEX,ADDRESS,DEPARTMENT_ID  " + " from " + " SHAIN";
+		String sql ="select \n" +
+				"* \n" +
+				"from \n" +
+				"SHAIN \n" +
+				"where \n" +
+				"ID='"+shain_id+"' \n";
+
 
 		// 商品リスト（Item型のリスト）
 		List<Shain> ShainList = new ArrayList<>();
@@ -84,6 +90,9 @@ public class displayShainServlet extends HttpServlet {
 				s.setShainDepartmentName(rs1.getString("DEPARTMENT_ID"));
 				// 作成した一つ分のItem型をリストに追加
 				ShainList.add(s);
+				System.out.println(s.getHome());
+				System.out.println(s.getShainDepartmentName());
+
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]", e.getMessage()), e);

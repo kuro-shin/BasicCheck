@@ -31,6 +31,5 @@ function renameDepartment(){
 
 
 $(document).ready(function() {
-
 	$('#remakeDepartmentButton').click(renameDepartment);
 });

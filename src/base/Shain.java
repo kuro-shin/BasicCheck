@@ -14,7 +14,7 @@ public class Shain {
 	}
 
 	public void setShain_id(String shain_id) {
-		Shain_id = shain_id;
+		this.Shain_id = shain_id;
 	}
 
 	public String getShain_name() {
@@ -22,7 +22,7 @@ public class Shain {
 	}
 
 	public void setShain_name(String shain_name) {
-		Shain_name = shain_name;
+		this.Shain_name = shain_name;
 	}
 
 	public String getAge() {
@@ -54,7 +54,7 @@ public class Shain {
 	}
 
 	public void setShainDepartmentName(String shainDepartmentName) {
-		ShainDepartmentName = shainDepartmentName;
+		this.ShainDepartmentName = shainDepartmentName;
 	}
 
 }

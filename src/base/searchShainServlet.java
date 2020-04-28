@@ -18,28 +18,34 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Servlet implementation class displayShainServlet
+ * Servlet implementation class searchShainServlet
  */
-@WebServlet("/displayShainServlet")
-public class displayShainServlet extends HttpServlet {
+@WebServlet("/searchShainServlet")
+public class searchShainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public displayShainServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public searchShainServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html; charset=UTF-8");
 		// TODO 必須機能「趣味参照機能」
 		// JDBCドライバの準備
+		String shainDepartmentName = request.getParameter("shainDepartmentName");
+		String shainId = request.getParameter("shainId");
+		String shainName = request.getParameter("shainName");
+
 
 		try {
 			// JDBCドライバのロード
@@ -55,7 +61,8 @@ public class displayShainServlet extends HttpServlet {
 		String dbPass = "webapp";
 
 		// 実行するSQL文
-		String sql = "select" + " ID,NAME,AGE,SEX,ADDRESS,DEPARTMENT_ID  " + " from " + " SHAIN";
+		String sql = "select \n" + "* \n" + "from \n" + "SHAIN \n" + "where \n" + "ID='"+shainId+"' \n"
+				+ "or NAME like '%"+shainName+"%' \n" + "or DEPARTMENT_ID='"+shainDepartmentName+"' \n";
 
 		// 商品リスト（Item型のリスト）
 		List<Shain> ShainList = new ArrayList<>();
@@ -94,13 +101,14 @@ public class displayShainServlet extends HttpServlet {
 		PrintWriter pw = response.getWriter();
 
 		pw.append(new ObjectMapper().writeValueAsString(ShainList));
-
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

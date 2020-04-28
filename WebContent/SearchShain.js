@@ -1,30 +1,31 @@
-var shain_count=0;
+var shain_count = 0;
 
-function displayShain() {
-	 'use strict';
-	 var requestQuery = {
-			 shainDepartmentName:DEPARTMENT_NAME,
-			 shainId:ID,
-			 shainName:NAME
-
-	 };
+function searchShain() {
+	'use strict';
+	var requestQuery = {
+		shainDepartmentName : $('#shainDepartmentName').val(),
+		shainId : $('#shainId').val(),
+		shainName : $('#shainName').val()
+	};
 
 	$.ajax({
 		type : 'GET',
 		dataType : 'json',
 		url : '/BasicCheck/searchShainServlet',
 		data : requestQuery,
-		async: false,
+		async : false,
 		success : function(json) {
 			// サーバーとの通信に成功した時の処理
 			// 確認のために返却値を出力
-			shain_count=json.length;
-
+			shain_count = json.length;
+			$("#shainTable").empty();
+			if (json.length == 0) {
+				$('#shainTable').append('<p>登録された社員はいません</p>');
+			}
 			for (var i = 0; i < json.length; i++) {
 				var s = json[i];
-				$('#shainTable').append('');
+				$('#shainTable').append('<div class="shain_list"><p>' + s.shain_id + '</p><p>' + s.shain_name + '</p></div>');
 			}
-
 
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -39,9 +40,8 @@ function displayShain() {
 	});
 }
 
-
 $(document).ready(function() {
 	// 初期表示用
-	$('#').click(searchShain);
+	$('#searchShainButton').click(searchShain);
 
 });

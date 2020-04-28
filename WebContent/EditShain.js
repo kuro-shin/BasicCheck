@@ -4,19 +4,17 @@ function executeAjax() {
 	 'use strict';
 	 var key = location.search.substring(3);
 	 var requestQuery = {
-				renew_department_id : key ,
-				renew_department_name : $('#renameDepartmentName').val()
+				shain_id : key ,
 			};
 	$.ajax({
 		type : 'GET',
 		dataType : 'json',
-		url : '/BasicCheck/displayShainServlet',
+		url : '/BasicCheck/editDisplayShainServlet',
 		data : requestQuery,
 		async: false,
 		success : function(json) {
 			// サーバーとの通信に成功した時の処理
 			// 確認のために返却値を出力
-			shain_count=json.length;
 			console.log(json);
 			for (var i = 0; i < json.length; i++) {
 				var s = json[i];
@@ -42,9 +40,45 @@ function executeAjax() {
 	});
 }
 
+function remakeShain(){
+
+
+	var key = location.search.substring(3);
+	var requestQuery = {
+	shain_id : key ,
+	renew_shain_id : $('#shain_id').val(),
+	renew_shain_name : $('#shain_name').val(),
+	renew_age : $('#age').val(),
+	renew_sex : $('#sex').val(),
+	renew_home : $('#home').val(),
+	renew_Shain_DepartmentName : $('#ShainDepartmentName').val(),
+};
+	$.ajax({
+		type : 'POST',
+		dataType : 'json',
+		url : '/BasicCheck/editShainServlet',
+		data : requestQuery,
+		async: false,
+		success : function(json) {
+			// サーバーとの通信に成功した時の処理
+			// 確認のために返却値を出力
+			console.log(json);
+			$('#ok').append('ok');
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			// サーバーとの通信に失敗した時の処理
+			console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+			console.log("textStatus     : " + textStatus);
+			console.log("errorThrown    : " + errorThrown.message);
+			console.log(errorThrown)
+		}
+	});
+}
+
 
 $(document).ready(function() {
 	// 初期表示用
 	executeAjax();
+	$('#remakeShainButton').click(remakeShain);
 
 });

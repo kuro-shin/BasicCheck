@@ -55,7 +55,7 @@ public class displayDepartmentServlet extends HttpServlet {
 		String dbPass = "webapp";
 
 		// 実行するSQL文
-		String sql = "select" + " ID,NAME  " + " from " + " DEPARTMENT";
+		String sql = "select ID,NAME from DEPARTMENT";
 
 		// 商品リスト（Item型のリスト）
 		List<Department> DepartmentList = new ArrayList<>();

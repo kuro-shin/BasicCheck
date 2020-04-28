@@ -12,16 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class deleteShainServlet
+ * Servlet implementation class editShainServlet
  */
-@WebServlet("/deleteShainServlet")
-public class deleteShainServlet extends HttpServlet {
+@WebServlet("/editShainServlet")
+public class editShainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public deleteShainServlet() {
+    public editShainServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,8 +39,15 @@ public class deleteShainServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String id = request.getParameter("q");
+		String shain_id = request.getParameter("shain_id");
+		String renew_shain_id = request.getParameter("renew_shain_id");
+		String renew_shain_name = request.getParameter("renew_shain_name");
+		String renew_age = request.getParameter("renew_age");
+		String renew_sex = request.getParameter("renew_sex");
+		String renew_home = request.getParameter("renew_home");
+		String renew_Shain_DepartmentName = request.getParameter("renew_Shain_DepartmentName");
 
+		System.out.print(renew_Shain_DepartmentName);
 		// JDBCドライバの準備
 		try {
 		    // JDBCドライバのロード
@@ -55,26 +62,29 @@ public class deleteShainServlet extends HttpServlet {
 		String dbUser = "webapp";
 		String dbPass = "webapp";
 
-		// 実行するSQL文
-		String sql = "delete " +
-				"from " +
-				"SHAIN " +
-				"where " +
-				"ID='"+id+"'";
+
+		String sql = "UPDATE SHAIN \n" +
+		"SET ID ='"+renew_shain_id+"', NAME = '"+renew_shain_name+"', AGE='"+renew_age+"',SEX='"+renew_sex+"',ADDRESS='"+renew_home+"',DEPARTMENT_ID='"+renew_Shain_DepartmentName+"' " +
+		"WHERE id = '"+shain_id+"'" ;
+
+		System.out.println(sql);
+		// 受注リスト（Order型のリスト）
 
 		// DBに接続してSQLを実行
 		try (
 				// データベースへ接続します
 				Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+
 				// SQLの命令文を実行するための準備をおこないます
 				Statement stmt = con.createStatement();	) {
-			int resultCount = stmt.executeUpdate(sql);//1つのSQL文しか実行できない
+			int resultCount = stmt.executeUpdate(sql);
 
-			System.out.println(resultCount+"件削除");
+			System.out.println(resultCount+"件編集");
 
 		} catch (Exception e) {
 			throw new RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]", e.getMessage()), e);
 		}
-	}
+
+}
 
 }
