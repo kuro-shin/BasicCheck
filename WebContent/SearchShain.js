@@ -24,7 +24,7 @@ function searchShain() {
 			}
 			for (var i = 0; i < json.length; i++) {
 				var s = json[i];
-				$('#shainTable').append('<div class="shain_list"><p>' + s.shain_id + '</p><p>' + s.shain_name + '</p></div>');
+				$('#shainTable').append('<div class="shain_list"><p> 社員ID:' + s.shain_id + '  社員名：' + s.shain_name + '</p></div>');
 			}
 
 		},

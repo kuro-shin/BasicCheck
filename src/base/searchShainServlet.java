@@ -61,7 +61,9 @@ public class searchShainServlet extends HttpServlet {
 		String dbPass = "webapp";
 
 		// 実行するSQL文
-		String sql = "select \n" + "* \n" + "from \n" + "SHAIN \n" + "where \n" + "ID='"+shainId+"' \n"
+		String sql = "select \n" + "* \n" + "from \n" + "SHAIN \n" +
+
+				"where \n" + "ID='"+shainId+"' \n"
 				+ "or NAME like '%"+shainName+"%' \n" + "or DEPARTMENT_ID='"+shainDepartmentName+"' \n";
 
 		// 商品リスト（Item型のリスト）
