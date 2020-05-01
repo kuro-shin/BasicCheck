@@ -1,5 +1,7 @@
 var shain_count=0;
 
+
+
 function executeAjax() {
 	 'use strict';
 	 var requestQuery = 1;
@@ -13,12 +15,21 @@ function executeAjax() {
 			// サーバーとの通信に成功した時の処理
 			// 確認のために返却値を出力
 			shain_count=json.length;
-			console.log(json);
+
+
+
+			if(json=="NOT LOGIN"){
+				$('#shainTable').append('<p>ログインしてください</p>');
+			}else{
 			for (var i = 0; i < json.length; i++) {
 				var s = json[i];
 				$('#shainTable').append('<tr class="shain_list"><td id="id'+(i+1)+'">' + s.shain_id + '</td><td>' + s.shain_name + '</td><td>'
 				+'<a id="edit'+(i+1)+'"href="http://localhost:8081/BasicCheck/EditShain.html?q='+s.shain_id+'">編集</a>'+ '</td><td>'
 				+'<input type="button" value="削除" id="delete'+(i+1)+'" onclick="deleteShain(\''+s.shain_id+'\')" ></td></tr>');
+				if(s.shain_id=='EMP0001'){
+					$('#shainTable').append('<button id="createbutton" onclick="location.href=\'http://localhost:8081/BasicCheck/createShain.html\'">社員新規作成</button>');
+				}
+			}
 			}
 
 

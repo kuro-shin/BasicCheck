@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * Servlet implementation class LoginServlet
  */
@@ -39,6 +41,13 @@ public class LoginServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		// TODO 必須機能「趣味参照機能」
 		// JDBCドライバの準備
+
+		HttpSession session = request.getSession();
+		//if (session != null){
+			session.removeAttribute("user");//なぜこれでうまくいく？新たに宣言したのに消すって何？
+		//	}
+
+
 		try {
 			// JDBCドライバのロード
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -58,31 +67,24 @@ public class LoginServlet extends HttpServlet {
 				"from \n" +
 				"AUTHENTICATION_INFO \n" +
 				"where 1=1 \n" +
-				"and SHAIN_ID='EMP0001' \n" +
-				"and PASSWORD='2687' \n" ;
+				"and SHAIN_ID='"+LoginId+"' \n" +
+				"and PASSWORD='"+LoginPassword+"' \n" ;
 
 
 		// DBに接続してSQLを実行
 		try (
-				// データベースへ接続します
-				Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
-				// SQLの命令文を実行するための準備をおこないます
-				Statement stmt = con.createStatement();
-				// SQLの命令文を実行し、その結果をResultSet型のrsに代入します
-				ResultSet rs1 = stmt.executeQuery(sql);) {
 
-			// SQL実行後の処理内容
-			// ユーザー情報をセッションに保存
-			// セッションを取得
+				Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+
+				Statement stmt = con.createStatement();
+
+				ResultSet rs1 = stmt.executeQuery(sql);) {
 			if(rs1.next()){
-			HttpSession session = request.getSession();
 			// セッションにユーザーコードを保存する
 			session.setAttribute("user", rs1.getString("SHAIN_ID") );
-			System.out.print(session.getAttribute("user"));
-			System.out.println(rs1);
+			session.setAttribute("authority", rs1.getString("ROLL") );
 			}
-//			PrintWriter pw = response.getWriter();
-//			pw.append(new ObjectMapper().writeValueAsString(rs1));
+
 
 		} catch (Exception e) {
 			throw new RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]", e.getMessage()), e);
@@ -90,8 +92,8 @@ public class LoginServlet extends HttpServlet {
 
 		// 画面へレスポンスを返却する処理
 		PrintWriter pw = response.getWriter();
-	//	pw.append(new ObjectMapper().writeValueAsString("ok"));
-
+		pw.append(new ObjectMapper().writeValueAsString("ok"));
+		System.out.println("pw:"+pw);
 
 	}
 

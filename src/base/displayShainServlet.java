@@ -7,7 +7,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,10 +50,11 @@ public class displayShainServlet extends HttpServlet {
 
 //		String status = (String) session.getAttribute("login");
 //		String loginRequest = request.getParameter("loginRequest");
-//		PrintWriter pw = response.getWriter();
-
-		//	if(sessionUserCd){
-
+		PrintWriter pw = response.getWriter();
+		System.out.println(sessionUserCd);
+			if(sessionUserCd==null){
+				pw.append(new ObjectMapper().writeValueAsString("NOT LOGIN"));
+			}else{
 
 		try {
 			// JDBCドライバのロード
@@ -68,7 +71,7 @@ public class displayShainServlet extends HttpServlet {
 
 		// 実行するSQL文
 		String sql = "select" + " ID,NAME,AGE,SEX,ADDRESS,DEPARTMENT_ID  " + " from " + " SHAIN";
-
+		Map <String,String> who = new HashMap<>();
 		// 商品リスト（Item型のリスト）
 		List<Shain> ShainList = new ArrayList<>();
 
@@ -88,8 +91,8 @@ public class displayShainServlet extends HttpServlet {
 			while (rs1.next()) {
 				// 商品ごとに新しいItemインスタンスを作
 				Shain s = new Shain();
-				s.setShain_id(rs1.getString("ID"));// Item型の変数itemに販売単価をセット
-				s.setShain_name(rs1.getString("NAME"));// Item型の変数itemに税区分をセット
+				s.setShain_id(rs1.getString("ID"));
+				s.setShain_name(rs1.getString("NAME"));
 				s.setAge(rs1.getString("AGE"));
 				s.setSex(rs1.getString("SEX"));
 				s.setHome(rs1.getString("ADDRESS"));
@@ -100,11 +103,10 @@ public class displayShainServlet extends HttpServlet {
 		} catch (Exception e) {
 			throw new RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]", e.getMessage()), e);
 		}
-
+		who.put("ID", sessionUserCd);
 		// 画面へレスポンスを返却する処理
-		System.out.println(ShainList);
-		PrintWriter pw = response.getWriter();
 		pw.append(new ObjectMapper().writeValueAsString(ShainList));
+			}
 
 	}
 

@@ -8,6 +8,7 @@ public class Shain {
 	private String sex;
 	private String home;
 	private String ShainDepartmentName;
+	private boolean Manager ;
 
 	public String getShain_id() {
 		return Shain_id;
@@ -55,6 +56,14 @@ public class Shain {
 
 	public void setShainDepartmentName(String shainDepartmentName) {
 		this.ShainDepartmentName = shainDepartmentName;
+	}
+
+	public boolean getManager() {
+		return Manager;
+	}
+
+	public void setManager(boolean isManager) {
+		this.Manager = isManager;
 	}
 
 }

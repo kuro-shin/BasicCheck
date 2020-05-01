@@ -4,7 +4,7 @@ function LoginCheck() {
 		LoginId : $('#LoginId').val(),
 		LoginPassword : $('#LoginPassword').val(),
 	};
-
+	console.log("aaa");
 	$.ajax({
 		type : 'GET',
 		dataType : 'json',
@@ -14,13 +14,17 @@ function LoginCheck() {
 		success : function(json) {
 			// サーバーとの通信に成功した時の処理
 			// 確認のために返却値を出力
-			if (json.length == 0) {
+//			console.log(json+"aaa");
+//			console.log(json.length);
+			if (json.length == null) {
 				$('#shainTable').append('<p>ログインできません。</p>');
-			}
+			}else{
 		    //ローカルストレージに「q」というキーで値を保存
 			//localStorage.setItem('q',inputVal);
 			// 画面遷移
+				//console.log(json);
 			location.href='./Shain.html';
+			}
 
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
