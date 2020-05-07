@@ -8,18 +8,24 @@
 </head>
 
 <body>
-	<h2 id="nameframe"></h2>
 	<h3>社員一覧：</h3>
+
 	<table id=shainTable>
-		<tr>
-			<th>社員ID</th>
-			<th>名前</th>
-			<th>編集ボタン</th>
-			<th>削除ボタン</th>
-		</tr>
+		<thead>
+			<tr>
+				<th>社員ID</th>
+				<th>名前</th>
+				<th>編集ボタン</th>
+				<th>削除ボタン</th>
+			</tr>
+		</thead>
+		<tbody id="shainTableBody"></tbody>
 	</table>
 
 	<button id="searchbutton" onclick="location.href='http://localhost:8081/BasicCheck/SearchShain.html'">検索</button>
+	<p id="createB">
 	<a href="http://localhost:8081/BasicCheck/Department.html">部署画面に移動</a>
+	<a href="http://localhost:8081/BasicCheck/Expense.html">経費関係の画面に移動</a>
+	<p id="LoginName"></p>
 </body>
 </html>

@@ -9,17 +9,21 @@
 
 <body>
 	<table id=DepartmentTable>
+		<thead>
 		<tr>
 			<th>ID</th>
 			<th>部署名</th>
 			<th>編集ボタン</th>
 			<th>削除ボタン</th>
 		</tr>
+		</thead>
+		<tbody id=DepartmentTableBody></tbody>
 	</table>
 
 	<p>部署データ新規作成 ：<input type="text" id="newDepartmentId" placeholder="部署ID"/><input type="text" id="newDepartmentName" placeholder="部署名"/></p>
 	<button id="createDepartment" >部署新規作成</button><button id="cancelDepartment" >キャンセル</button>
-	<a href="http://localhost:8081/BasicCheck/Shain.html">部署画面に移動</a>
+	<a href="http://localhost:8081/BasicCheck/Shain.html">社員一覧画面に移動</a>
+	<p id="LoginName"></p>
 
 </body>
 </html>

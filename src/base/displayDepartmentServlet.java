@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -49,6 +50,9 @@ public class displayDepartmentServlet extends HttpServlet {
 			throw new RuntimeException(String.format("JDBCドライバのロードに失敗しました。詳細:[%s]", e.getMessage()), e);
 		}
 
+		HttpSession session = request.getSession();
+		String sessionRoll = (String) session.getAttribute("roll");
+
 		// データベースにアクセスするために、データベースのURLとユーザ名とパスワードを指定
 		String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";
 		String dbUser = "webapp";
@@ -80,6 +84,11 @@ public class displayDepartmentServlet extends HttpServlet {
 				d.setDepartment_name(rs1.getString("NAME"));// Item型の変数itemに税区分をセット
 				// 作成した一つ分のItem型をリストに追加
 				DepartmentList.add(d);
+				if ("manager".equals(sessionRoll)) {
+					d.setManager(true);
+				} else {
+					d.setManager(false);
+				}
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]", e.getMessage()), e);

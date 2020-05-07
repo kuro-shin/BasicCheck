@@ -9,6 +9,8 @@ public class Shain {
 	private String home;
 	private String ShainDepartmentName;
 	private boolean Manager ;
+	private boolean Loginuser ;
+
 
 	public String getShain_id() {
 		return Shain_id;
@@ -65,5 +67,15 @@ public class Shain {
 	public void setManager(boolean isManager) {
 		this.Manager = isManager;
 	}
+
+	public boolean getLoginuser() {
+		return Loginuser;
+	}
+
+	public void setLoginuser(boolean loginUser) {
+		Loginuser = loginUser;
+	}
+
+
 
 }

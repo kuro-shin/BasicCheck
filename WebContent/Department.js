@@ -13,9 +13,22 @@ function executeAjax() {
 			console.log(json);
 			for (var i = 0; i < json.length; i++) {
 				var d = json[i];
-				$('#DepartmentTable').append('<tr class="department_list"><td id="id'+(i+1)+'">' + d.department_id + '</td><td>' + d.department_name + '</td><td>'
-				+'<a id="edit'+(i+1)+'"href="http://localhost:8081/BasicCheck/EditDepartment.html?q='+d.department_id+'">編集</a>'+ '</td><td>'
-				+'<input type="button" value="削除" id="delete'+(i+1)+'" onclick="deleteDepartment(\''+d.department_id+'\')" ></td></tr>');
+				var m=d.manager;
+				//console.log(m);
+				console.log(m==true);
+				$('#DepartmentTable').append('<tr id="department_list'+(i+1)+'"><td id="id'+(i+1)+'">' + d.department_id + '</td><td>' + d.department_name + '</td><td>');
+
+				if(m==true){
+				$('#department_list'+(i+1)).append('<a id="edit'+(i+1)+'"href="http://localhost:8081/BasicCheck/EditDepartment.html?q='+d.department_id+'">編集</a>');
+				}
+				$('#department_list'+(i+1)).append('</td><td>');
+
+				if(m==true){
+				$('#department_list'+(i+1)).append('<input type="button" value="削除" id="delete'+(i+1)+'" onclick="deleteDepartment(\''+d.department_id+'\')" >');
+				}
+				$('#department_list'+(i+1)).append('</td><tr>');
+
+
 			}
 
 
