@@ -3,7 +3,8 @@ package base;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.employeeDAO;
 /**
  * Servlet implementation class deleteShainServlet
  */
@@ -42,39 +44,39 @@ public class deleteShainServlet extends HttpServlet {
 		String id = request.getParameter("q");
 
 		// JDBCドライバの準備
-		try {
-		    // JDBCドライバのロード
-		    Class.forName("oracle.jdbc.driver.OracleDriver");
-		} catch (ClassNotFoundException e) {
-		    // ドライバが設定されていない場合はエラーになります
-		    throw new RuntimeException(String.format("JDBCドライバのロードに失敗しました。詳細:[%s]", e.getMessage()), e);
-		}
+		employeeDAO.loadDB();
 
 		// データベースにアクセスするために、データベースのURLとユーザ名とパスワードを指定
-		String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";
-		String dbUser = "webapp";
-		String dbPass = "webapp";
-
-		// 実行するSQL文
-		String sql = "delete " +
-				"from " +
-				"SHAIN " +
-				"where " +
-				"ID='"+id+"'";
 
 		// DBに接続してSQLを実行
 		try (
 				// データベースへ接続します
-				Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+				Connection con = DriverManager.getConnection(employeeDAO.dbUrl, employeeDAO.dbUser, employeeDAO.dbPass);
+
 				// SQLの命令文を実行するための準備をおこないます
-				Statement stmt = con.createStatement();	) {
-			int resultCount = stmt.executeUpdate(sql);//1つのSQL文しか実行できない
+				//Statement stmt = con.createStatement();
+				PreparedStatement stmt = createPreparedStatement(con,id);
+				) {
+			int resultCount = stmt.executeUpdate();//1つのSQL文しか実行できない
 
 			System.out.println(resultCount+"件削除");
 
 		} catch (Exception e) {
 			throw new RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]", e.getMessage()), e);
 		}
+	}
+
+	private PreparedStatement createPreparedStatement(Connection con, String id) throws SQLException {
+		// 実行するSQL文
+		String sql = "delete " +
+				"from " +
+				"SHAIN " +
+				"where " +
+				"ID=?";
+
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1, id);
+		return stmt;
 	}
 
 }

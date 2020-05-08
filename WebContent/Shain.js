@@ -60,6 +60,9 @@ function executeAjax() {
 
 function deleteShain(id){
 	 $(".shain_list").remove();// 今までのdepartmentlist消す
+	 $('#LoginName').remove();
+	 $('#shainTableBody').empty();
+	 $('#createB').empty();
 	var requestQuery = {
 	q : id
 };

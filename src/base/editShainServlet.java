@@ -3,13 +3,16 @@ package base;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import dao.employeeDAO;
 
 /**
  * Servlet implementation class editShainServlet
@@ -47,37 +50,17 @@ public class editShainServlet extends HttpServlet {
 		String renew_home = request.getParameter("renew_home");
 		String renew_Shain_DepartmentName = request.getParameter("renew_Shain_DepartmentName");
 
-		System.out.print(renew_Shain_DepartmentName);
-		// JDBCドライバの準備
-		try {
-		    // JDBCドライバのロード
-		    Class.forName("oracle.jdbc.driver.OracleDriver");
-		} catch (ClassNotFoundException e) {
-		    // ドライバが設定されていない場合はエラーになります
-		    throw new RuntimeException(String.format("JDBCドライバのロードに失敗しました。詳細:[%s]", e.getMessage()), e);
-		}
+		employeeDAO.loadDB();
 
-		// データベースにアクセスするために、データベースのURLとユーザ名とパスワードを指定
-		String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";
-		String dbUser = "webapp";
-		String dbPass = "webapp";
-
-
-		String sql = "UPDATE SHAIN \n" +
-		"SET ID ='"+renew_shain_id+"', NAME = '"+renew_shain_name+"', AGE='"+renew_age+"',SEX='"+renew_sex+"',ADDRESS='"+renew_home+"',DEPARTMENT_ID='"+renew_Shain_DepartmentName+"' " +
-		"WHERE id = '"+shain_id+"'" ;
-
-		System.out.println(sql);
-		// 受注リスト（Order型のリスト）
-
-		// DBに接続してSQLを実行
 		try (
 				// データベースへ接続します
-				Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+				Connection con = DriverManager.getConnection(employeeDAO.dbUrl, employeeDAO.dbUser, employeeDAO.dbPass);
 
 				// SQLの命令文を実行するための準備をおこないます
-				Statement stmt = con.createStatement();	) {
-			int resultCount = stmt.executeUpdate(sql);
+				//Statement stmt = con.createStatement();
+				PreparedStatement stmt = createPreparedStatement(con,shain_id,renew_shain_id,renew_shain_name,renew_age,renew_sex,renew_home,renew_Shain_DepartmentName);
+				) {
+			int resultCount = stmt.executeUpdate();
 
 			System.out.println(resultCount+"件社員編集したよ");
 
@@ -86,5 +69,23 @@ public class editShainServlet extends HttpServlet {
 		}
 
 }
+
+	private PreparedStatement createPreparedStatement(Connection con, String shain_id,String renew_shain_id,String renew_shain_name,String renew_age,String renew_sex,String renew_home,String renew_Shain_DepartmentName) throws SQLException {
+		// 実行するSQL文
+		String sql = "UPDATE SHAIN \n" +
+				"SET ID =?, NAME =?, AGE=?,SEX=?,ADDRESS=?,DEPARTMENT_ID=? " +
+				"WHERE id = ?" ;
+
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1, renew_shain_id);
+		stmt.setString(2, renew_shain_name);
+		int i = Integer.parseInt(renew_age);
+		stmt.setInt(3,i);
+		stmt.setString(4, renew_sex);
+		stmt.setString(5, renew_home);
+		stmt.setString(6, renew_Shain_DepartmentName);
+		stmt.setString(7, shain_id);
+		return stmt;
+	}
 
 }
