@@ -10,19 +10,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class RegistExpenseServlet
+ * Servlet implementation class ApprovalExpenseServlet
  */
-@WebServlet("/RegistExpenseServlet")
-public class RegistExpenseServlet extends HttpServlet {
+@WebServlet("/ApprovalExpenseServlet")
+public class ApprovalExpenseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RegistExpenseServlet() {
+    public ApprovalExpenseServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,15 +39,12 @@ public class RegistExpenseServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String id = request.getParameter("id");
-		String today = request.getParameter("today");
-		String applicant_name = request.getParameter("applicant_name");
-		String title = request.getParameter("title");
-		String price = request.getParameter("price");
-		String payee = request.getParameter("payee");
-		System.out.println(applicant_name);
-		HttpSession session = request.getSession();
-		String sessionUserCd = (String) session.getAttribute("user");
+		String reason = request.getParameter("reason");
+		String updated_date = request.getParameter("updated_date");
+		String updater_name = request.getParameter("updater_name");
+		String status = request.getParameter("status");
+		String cd = request.getParameter("cd");
+
 
 		// JDBCドライバの準備
 		try {
@@ -65,13 +61,11 @@ public class RegistExpenseServlet extends HttpServlet {
 		String dbPass = "webapp";
 
 		// 実行するSQL文
-		String sql = "INSERT INTO EXPENSE \n" +
-				" (CD,TODAY,APPLICANT_CODE,APPLICANT_NAME,TITLE,PAYEE,PRICE,STATUS,UPDATED_DATE) \n" +
-				"VALUES \n" +
-				" ('"+id+"','"+today+"','"+sessionUserCd+"','"+applicant_name+"','"+title+"','"+payee+"','"+price+"','承認待ち','') \n" ;
+		String sql = "update EXPENSE \n" +
+				"set UPDATED_DATE='"+updated_date+"',UPDATER_NAME='"+updater_name+"',STATUS='"+status+"',REASON='"+reason+"' \n" +
+				"where \n" +
+				"CD='"+cd+"'";
 
-
-		// 受注リスト（Order型のリスト）
 
 		// DBに接続してSQLを実行
 		try (
@@ -82,7 +76,7 @@ public class RegistExpenseServlet extends HttpServlet {
 				Statement stmt = con.createStatement();	) {
 			int resultCount = stmt.executeUpdate(sql);
 
-			System.out.println(resultCount+"件expense申請したよ");
+			System.out.println(resultCount+"件承認or拒否完了");
 
 		} catch (Exception e) {
 			throw new RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]", e.getMessage()), e);

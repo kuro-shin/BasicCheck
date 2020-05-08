@@ -78,7 +78,7 @@ public class editDepartmentServlet extends HttpServlet {
 						Statement stmt = con.createStatement();	) {
 					int resultCount = stmt.executeUpdate(sql);
 
-					System.out.println(resultCount+"件編集");
+					System.out.println(resultCount+"件departmentを編集したよ");
 
 				} catch (Exception e) {
 					throw new RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]", e.getMessage()), e);

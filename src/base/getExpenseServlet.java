@@ -99,6 +99,8 @@ public class getExpenseServlet extends HttpServlet {
 				e.setReason(rs1.getString("REASON"));
 				// 作成した一つ分のItem型をリストに追加
 				ExpenseList.add(e);
+				//System.out.println("sessionUserCd:"+sessionUserCd);
+				//System.out.println("rs1.getString(ID):"+rs1.getString("ID"));
 				if (sessionUserCd.equals(rs1.getString("ID"))) {
 					e.setLoginuser(true);
 				} else {

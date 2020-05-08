@@ -1,5 +1,4 @@
 function registExpense(){
-	$("#ExpenseTableBody").remove();// 今までのdepartmentlist消す
 	var requestQuery = {
 			id : $('#id').val(),
 			today : $('#today').val(),
