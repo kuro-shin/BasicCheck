@@ -59,7 +59,7 @@ function remakeShain(){
 			// サーバーとの通信に成功した時の処理
 			// 確認のために返却値を出力
 			console.log(json);
-			$('#ok').append('<p>ok</p>');
+			location.href='./Shain.html';
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			// サーバーとの通信に失敗した時の処理

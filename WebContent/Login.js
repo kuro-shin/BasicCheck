@@ -12,15 +12,11 @@ function LoginCheck() {
 		async : false,
 		success : function(json) {
 			// サーバーとの通信に成功した時の処理
-			// 確認のために返却値を出力
 
-			if (json.length == null) {
-				$('#shainTable').append('<p>ログインできません。</p>');
+			if (Object.keys(json).length == '0') {
+				$('#LoginError').empty();
+				$('#LoginError').append('<p>ログインできません。</p>');
 			}else{
-		    //ローカルストレージに「q」というキーで値を保存
-			//localStorage.setItem('q',inputVal);
-			// 画面遷移
-				//console.log(json);
 			location.href='./Shain.html';
 			}
 

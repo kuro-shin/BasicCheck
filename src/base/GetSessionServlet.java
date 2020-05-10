@@ -21,16 +21,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.employeeDAO;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class GetSessionServlet
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/GetSessionServlet")
+public class GetSessionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public GetSessionServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,61 +40,35 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String LoginId = request.getParameter("LoginId");
-		String LoginPassword = request.getParameter("LoginPassword");
+		// TODO Auto-generated method stub
+
 		response.setContentType("text/html; charset=UTF-8");
-		// TODO 必須機能「趣味参照機能」
-		// JDBCドライバの準備
 
 		HttpSession session = request.getSession();
-		//if (session != null){
-			session.removeAttribute("user");//なぜこれでうまくいく？新たに宣言したのに消すって何？
-		//	}
-
 			employeeDAO.loadDB();
-
-		// 実行するSQL文
-		String sql ="select \n" +
-				"* \n" +
-				"from \n" +
-				"AUTHENTICATION_INFO \n" +
-				"where 1=1 \n" +
-				"and SHAIN_ID='"+LoginId+"' \n" +
-				"and PASSWORD='"+LoginPassword+"' \n" ;
 
 		// TO DO 返却用のMap作る
 		Map<String, String> status = new HashMap<>();
+		String sql = "select ID from  SHAIN";
 
 		try (
 
-				//Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
 				Connection con = DriverManager.getConnection(employeeDAO.dbUrl, employeeDAO.dbUser, employeeDAO.dbPass);
 
 				Statement stmt = con.createStatement();
 
 				ResultSet rs1 = stmt.executeQuery(sql);) {
-			if(rs1.next()){
-			// セッションにユーザーコードを保存する
-			session.setAttribute("user", rs1.getString("SHAIN_ID") );
-			status.put("user", rs1.getString("SHAIN_ID") );
 
-			session.setAttribute("roll", rs1.getString("ROLL") );
-			status.put("roll", rs1.getString("ROLL") );
-
-			session.setAttribute("name", rs1.getString("NAME") );
-			status.put("roll", rs1.getString("ROLL") );
-
-			}
-
+			status.put("user", (String) session.getAttribute("user"));
+			status.put("roll", (String) session.getAttribute("roll"));
+			status.put("name", (String) session.getAttribute("name"));
 
 		} catch (Exception e) {
 			throw new RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]", e.getMessage()), e);
 		}
 
-		// 画面へレスポンスを返却する処理
 		PrintWriter pw = response.getWriter();
 		pw.append(new ObjectMapper().writeValueAsString(status));
-
 
 	}
 
@@ -103,7 +77,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		doGet(request, response);
 	}
 
 }
