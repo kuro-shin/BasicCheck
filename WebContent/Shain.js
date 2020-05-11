@@ -17,6 +17,9 @@ function getSessionInfomation() {
 			USER = json.user;
 			ROLL = json.roll;
 			NAME = json.name;
+			console.log(USER);
+			console.log(ROLL);
+			console.log(NAME);
 
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -48,27 +51,28 @@ function executeAjax() {
 			for (var i = 0; i < json.length; i++) {
 				var s = json[i];
 				$('#shainTableBody').append('<tr id="shain_list'+(i+1)+'"><td id="id'+(i+1)+'">' + s.shain_id + '</td><td>' + s.shain_name + '</td><td>');
-				var m=s.manager;
+
 				var l=s.loginuser;
-				if(m==true||l==true){
+				if(ROLL=='manager'||l==true){
 				$('#shain_list'+(i+1)).append('<a id="edit'+(i+1)+'" href="http://localhost:8081/BasicCheck/EditShain.html?q='+s.shain_id+'">編集</a>');
 				}
 				$('#shain_list'+(i+1)).append('</td><td>');
 
-				if(m==true){
+				if(ROLL=='manager'){
 				$('#shain_list'+(i+1)).append('<input type="button" value="削除" id="delete'+(i+1)+'" onclick="deleteShain(\''+s.shain_id+'\')" >');
 				}
 				$('#shain_list'+(i+1)).append('</td></tr>');
 
-				if(m==true&&l==true){
-					$('#createB').append('<button id="createbutton" onclick="location.href=\'http://localhost:8081/BasicCheck/createShain.html\'">社員新規作成</button>');
-				}
-
 				if(l==true){
-				$('#LoginName').append('ログインユーザー：'+s.shain_name);
+				$('#LoginName').append('ログインユーザー：'+USER);
 				}
 
 			}
+
+			if(ROLL=='manager'){
+				$('#createB').append('<button id="createbutton" onclick="location.href=\'http://localhost:8081/BasicCheck/createShain.html\'">社員新規作成</button>');
+			}
+
 			}
 
 

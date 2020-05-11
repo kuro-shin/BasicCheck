@@ -47,20 +47,18 @@ public class LoginServlet extends HttpServlet {
 		// JDBCドライバの準備
 
 		HttpSession session = request.getSession();
-		//if (session != null){
 			session.removeAttribute("user");//なぜこれでうまくいく？新たに宣言したのに消すって何？
-		//	}
+
 
 			employeeDAO.loadDB();
 
 		// 実行するSQL文
-		String sql ="select \n" +
-				"* \n" +
-				"from \n" +
-				"AUTHENTICATION_INFO \n" +
-				"where 1=1 \n" +
-				"and SHAIN_ID='"+LoginId+"' \n" +
-				"and PASSWORD='"+LoginPassword+"' \n" ;
+		String sql ="select * " +
+				"from " +
+				"AUTHENTICATION_INFO " +
+				"where 1=1 " +
+				"and SHAIN_ID='"+LoginId+"' " +
+				"and PASSWORD='"+LoginPassword+"' " ;
 
 		// TO DO 返却用のMap作る
 		Map<String, String> status = new HashMap<>();
@@ -81,8 +79,6 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("roll", rs1.getString("ROLL") );
 			status.put("roll", rs1.getString("ROLL") );
 
-			session.setAttribute("name", rs1.getString("NAME") );
-			status.put("roll", rs1.getString("ROLL") );
 
 			}
 

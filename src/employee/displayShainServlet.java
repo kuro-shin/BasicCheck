@@ -61,7 +61,6 @@ public class displayShainServlet extends HttpServlet {
 			employeeDAO.loadDB();
 			List<Shain> ShainList = new ArrayList<>();
 			try (
-
 					Connection con = DriverManager.getConnection(employeeDAO.dbUrl, employeeDAO.dbUser,
 							employeeDAO.dbPass);
 
